@@ -1,0 +1,12 @@
+.header {
+  min-width: 100%;
+  padding: 10px 20px;
+}
+
+.nav > a {
+  padding-bottom: 5px;
+}
+
+.nav > a:not(:last-child) {
+  margin-right: 10px;
+}
