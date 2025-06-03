@@ -1,54 +1,78 @@
-# React + TypeScript + Vite
+# Rick and Morty Universe Explorer (React-Router)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Это интерактивное React-приложение с информацией вселенной Рика и Морти с использованием React Router. Приложение позволяет просматривать персонажей, локации и эпизоды популярного мультсериала.
 
-Currently, two official plugins are available:
+## Особенности
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Навигация между категориями: персонажи, локации, эпизоды
 
-## Expanding the ESLint configuration
+- Детальные страницы для каждого элемента
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Сортировка элементов по дате создания (ASC/DESC)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- Страница 404 для несуществующих роутов
+
+## Установка и запуск
+
+Клонируйте репозиторий:
+
+```bash
+git clone https://github.com/progeat/rick-and-morty-explorer.git
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Перейдите в директорию проекта:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+cd rick-and-morty-explorer
 ```
+
+Установите зависимости:
+
+```bash
+npm install
+```
+
+Запустите приложение:
+
+```bash
+npm run dev
+```
+
+Приложение будет доступно по адресу: http://localhost:5173
+
+## Используемые технологии
+
+- React 18
+
+- React Router
+
+- CSS Modules для стилизации
+
+- Vite
+
+## Источники данных
+
+Приложение использует следующие JSON-файлы:
+
+- [Персонажи](https://fs04.gcfiles.net/fileservice/file/download/a/177331/sc/440/h/5ef2038de91e3cd0f6c96ad26edded6b.zip)
+
+- [Локации](https://fs04.gcfiles.net/fileservice/file/download/a/177331/sc/147/h/d390469e328f28610acbc6ad653f191d.zip)
+
+- [Эпизоды](https://fs04.gcfiles.net/fileservice/file/download/a/177331/sc/65/h/962534f30cbd976dc27504565c79fd15.zip)
+
+## Функциональность
+
+- Главная страница с приветствием
+
+- Навигационная панель, доступная на всех страницах
+
+- Страницы категорий со списком элементов
+
+- Детальные страницы с полной информацией
+
+- Сортировка по дате создания (возрастание/убывание)
+
+- Страница 404 для несуществующих маршрутов
+
+Лицензия
+Этот проект лицензирован по лицензии MIT
