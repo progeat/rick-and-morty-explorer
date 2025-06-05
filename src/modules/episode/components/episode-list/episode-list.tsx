@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { Link } from 'react-router-dom';
-import type { EpisodeModel } from '../../../core/interfaces';
-import { ROUTES } from '../../../core/enums';
+import type { EpisodeModel } from '../../../../core/interfaces';
+import { ROUTES } from '../../../../core/enums';
 import styled from './episode-list.module.css';
 
 type EpisodeListProps = {

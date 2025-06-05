@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import type { HeroModel } from '../../../core/interfaces';
+import type { HeroModel } from '../../../../core/interfaces';
 import styled from './hero-info.module.css';
 
 type HeroInfoProps = {

@@ -1,10 +1,10 @@
 import type { FC } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
-import { LocationInfo } from '../../../modules/location/location-info';
+import { LocationInfo } from '../../../modules/location/components/location-info';
 import type { LocationModel } from '../../../core/interfaces';
 import { ROUTES } from '../../../core/enums';
 import locations from '../../../core/data/location.json';
-import styled from './location-page.module.css';
+import styled from './location.module.css';
 
 export const LocationPage: FC = () => {
   const { id } = useParams();

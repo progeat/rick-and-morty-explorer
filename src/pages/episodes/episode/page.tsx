@@ -1,10 +1,10 @@
 import type { FC } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
-import { EpisodeInfo } from '../../../modules/episode/episode-info';
+import { EpisodeInfo } from '../../../modules/episode/components/episode-info';
 import episodesData from '../../../core/data/episode.json';
 import { DtoToModelMapper } from '../../../core/mapers/dto-to-model.mappers';
 import { ROUTES } from '../../../core/enums';
-import styled from './episode-page.module.css';
+import styled from './episode.module.css';
 
 export const EpisodePage: FC = () => {
   const { id } = useParams();

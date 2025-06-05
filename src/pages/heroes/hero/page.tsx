@@ -1,10 +1,10 @@
 import type { FC } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
-import { HeroInfo } from '../../../modules/hero/hero-info';
+import { HeroInfo } from '../../../modules/hero/components/hero-info';
 import type { HeroModel } from '../../../core/interfaces';
 import characters from '../../../core/data/characters.json';
 import { ROUTES } from '../../../core/enums';
-import styled from './hero-page.module.css';
+import styled from './hero.module.css';
 
 export const HeroPage: FC = () => {
   const { id } = useParams();

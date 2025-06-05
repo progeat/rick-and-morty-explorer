@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import styled from './page.module.css';
+import styled from './home.module.css';
 
 export const HomePage: FC = () => {
   return (

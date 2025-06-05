@@ -1,12 +1,12 @@
 import type { FC } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { LocationList } from '../../../modules/location/location-list';
+import { LocationList } from '../../../modules/location/components/location-list';
 import { ControlPanel } from '../../../ui/control-panel';
 import type { LocationModel } from '../../../core/interfaces';
 import { SORT_DIRECTION } from '../../../core/enums';
 import { Sorter } from '../../../core/helpers/sorter.helpers';
 import locations from '../../../core/data/location.json';
-import styled from './locations-page.module.css';
+import styled from './locations.module.css';
 
 export const LocationsPage: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();

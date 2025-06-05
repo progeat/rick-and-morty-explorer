@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import type { LocationModel } from '../../../core/interfaces';
+import type { LocationModel } from '../../../../core/interfaces';
 
 type LocationInfoProps = {
   location: LocationModel;

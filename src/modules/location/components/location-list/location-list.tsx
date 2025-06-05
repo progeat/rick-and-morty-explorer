@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { Link } from 'react-router-dom';
-import type { LocationModel } from '../../../core/interfaces';
-import { ROUTES } from '../../../core/enums';
+import type { LocationModel } from '../../../../core/interfaces';
+import { ROUTES } from '../../../../core/enums';
 import styled from './location-list.module.css';
 
 type LocationListProps = {

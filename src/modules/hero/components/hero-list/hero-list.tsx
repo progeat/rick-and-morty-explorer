@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { Link } from 'react-router-dom';
-import type { HeroModel } from '../../../core/interfaces';
-import { ROUTES } from '../../../core/enums';
+import type { HeroModel } from '../../../../core/interfaces';
+import { ROUTES } from '../../../../core/enums';
 import styled from './hero-list.module.css';
 
 type HeroListProps = {

@@ -1,12 +1,12 @@
 import type { FC } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { HeroList } from '../../../modules/hero/hero-list';
+import { HeroList } from '../../../modules/hero/components/hero-list';
 import { ControlPanel } from '../../../ui/control-panel';
 import type { HeroModel } from '../../../core/interfaces';
 import { SORT_DIRECTION } from '../../../core/enums';
 import { Sorter } from '../../../core/helpers/sorter.helpers';
 import heroes from '../../../core/data/characters.json';
-import styled from './heroes-page.module.css';
+import styled from './heroes.module.css';
 
 export const HeroesPage: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();

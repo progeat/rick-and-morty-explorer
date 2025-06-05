@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import type { EpisodeModel } from '../../../core/interfaces';
+import type { EpisodeModel } from '../../../../core/interfaces';
 
 type EpisodeInfoProps = {
   episode: EpisodeModel;
