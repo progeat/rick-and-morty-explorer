@@ -1,10 +1,6 @@
 import type { FC } from 'react';
-import './App.css';
+import { AppRouter } from './router/app.router';
 
 export const App: FC = () => {
-  return (
-    <>
-      <h1>Rick and Morty</h1>
-    </>
-  );
+  return <AppRouter />;
 };
