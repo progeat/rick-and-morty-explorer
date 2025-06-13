@@ -1,6 +1,11 @@
 import type { FC } from 'react';
-import { AppRouter } from './router/app.router';
+import { AuthProvider } from './contexts';
+import { AppRouter } from './router';
 
 export const App: FC = () => {
-  return <AppRouter />;
+  return (
+    <AuthProvider>
+      <AppRouter />
+    </AuthProvider>
+  );
 };

@@ -1,22 +1,31 @@
-import type { FC } from 'react';
+import { useEffect, type FC } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { LocationList } from '../../../modules/location/components/location-list';
 import { ControlPanel } from '../../../ui/control-panel';
 import type { LocationModel } from '../../../core/interfaces';
-import { SORT_DIRECTION } from '../../../core/enums';
+import { useFetch } from '../../../core/hooks';
+import { API_ROUTES, SORT_DIRECTION } from '../../../core/enums';
 import { Sorter } from '../../../core/helpers/sorter.helpers';
-import locations from '../../../core/data/location.json';
 import styled from './locations.module.css';
 
 export const LocationsPage: FC = () => {
+  const { data: locations, isLoading, error, get } = useFetch();
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const currentSortParam =
     searchParams.get('sort') ?? (SORT_DIRECTION.ASC as SORT_DIRECTION);
-  const sortedlocations = Sorter.sortByCreated(
-    locations as LocationModel[],
-    currentSortParam as SORT_DIRECTION
-  );
+  const sortedlocations =
+    locations !== null
+      ? Sorter.sortByCreated(
+          locations as LocationModel[],
+          currentSortParam as SORT_DIRECTION
+        )
+      : [];
+
+  useEffect(() => {
+    get(API_ROUTES.LOCATIONS);
+  }, [get]);
 
   const handleSortChange = (newSortValue: SORT_DIRECTION) => {
     setSearchParams({ sort: newSortValue });
@@ -29,7 +38,11 @@ export const LocationsPage: FC = () => {
         currentSortParam={currentSortParam as SORT_DIRECTION}
         handleSortChange={handleSortChange}
       />
-      <LocationList locations={sortedlocations as LocationModel[]} />
+      <LocationList
+        locations={sortedlocations as LocationModel[]}
+        isLoading={isLoading}
+        error={error}
+      />
     </div>
   );
 };
