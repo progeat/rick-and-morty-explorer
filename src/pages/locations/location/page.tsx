@@ -1,23 +1,38 @@
-import type { FC } from 'react';
+import { useEffect, useRef, type FC } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { LocationInfo } from '../../../modules/location/components/location-info';
 import type { LocationModel } from '../../../core/interfaces';
-import { ROUTES } from '../../../core/enums';
-import locations from '../../../core/data/location.json';
+import { useFetch } from '../../../core/hooks';
+import { API_ROUTES, ROUTES } from '../../../core/enums';
 import styled from './location.module.css';
 
 export const LocationPage: FC = () => {
-  const { id } = useParams();
-  const location = locations.find((location) => location.id === Number(id));
+  const hasRequested = useRef(false);
 
-  if (!id || !location) {
-    return <Navigate to={ROUTES.NOT_FOUND} />;
+  const { id } = useParams();
+
+  const {
+    data: location,
+    isLoading,
+    error,
+    get,
+  } = useFetch<LocationModel | null>();
+
+  useEffect(() => {
+    if (id) {
+      get(`${API_ROUTES.LOCATIONS}/${id}`);
+      hasRequested.current = true;
+    }
+  }, [get, id]);
+
+  if (!id || (hasRequested.current && !isLoading && !location)) {
+    return <Navigate to={ROUTES.NOT_FOUND} replace />;
   }
 
   return (
     <div className={styled['location-page']}>
       <h1>Location</h1>
-      <LocationInfo location={location as LocationModel} />
+      <LocationInfo location={location!} isLoading={isLoading} error={error} />
     </div>
   );
 };
