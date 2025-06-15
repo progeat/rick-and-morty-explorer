@@ -1,6 +1,5 @@
 import {
   createContext,
-  useCallback,
   useEffect,
   useLayoutEffect,
   useState,
@@ -26,12 +25,12 @@ const initialState: AuthContextState = {
 export const AuthContext = createContext<AuthContextState>(initialState);
 
 export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUserContext] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useLayoutEffect(() => {
     const storageUser = sessionStorage.getItem('user');
     if (storageUser) {
-      setUserContext(JSON.parse(storageUser));
+      setUser(JSON.parse(storageUser));
     }
   }, []);
 
@@ -42,10 +41,6 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       sessionStorage.removeItem('user');
     }
   }, [user]);
-
-  const setUser = useCallback((user: User | null) => {
-    setUserContext(user);
-  }, []);
 
   return (
     <AuthContext.Provider value={{ user, setUser }}>
