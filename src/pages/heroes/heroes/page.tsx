@@ -1,22 +1,31 @@
-import type { FC } from 'react';
+import { useEffect, type FC } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { HeroList } from '../../../modules/hero/components/hero-list';
 import { ControlPanel } from '../../../ui/control-panel';
 import type { HeroModel } from '../../../core/interfaces';
-import { SORT_DIRECTION } from '../../../core/enums';
+import { useFetch } from '../../../core/hooks';
+import { API_ROUTES, SORT_DIRECTION } from '../../../core/enums';
 import { Sorter } from '../../../core/helpers/sorter.helpers';
-import heroes from '../../../core/data/characters.json';
 import styled from './heroes.module.css';
 
 export const HeroesPage: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const { data: heroes, isLoading, error, get } = useFetch();
+
   const currentSortParam =
     searchParams.get('sort') ?? (SORT_DIRECTION.ASC as SORT_DIRECTION);
-  const sortedHeroes = Sorter.sortByCreated(
-    heroes as HeroModel[],
-    currentSortParam as SORT_DIRECTION
-  );
+  const sortedHeroes =
+    heroes !== null
+      ? Sorter.sortByCreated(
+          heroes as HeroModel[],
+          currentSortParam as SORT_DIRECTION
+        )
+      : [];
+
+  useEffect(() => {
+    get(API_ROUTES.HEROES);
+  }, [get]);
 
   const handleSortChange = (newSortValue: SORT_DIRECTION) => {
     setSearchParams({ sort: newSortValue });
@@ -29,7 +38,11 @@ export const HeroesPage: FC = () => {
         currentSortParam={currentSortParam as SORT_DIRECTION}
         handleSortChange={handleSortChange}
       />
-      <HeroList heroes={sortedHeroes as HeroModel[]} />
+      <HeroList
+        heroes={sortedHeroes as HeroModel[]}
+        isLoading={isLoading}
+        error={error}
+      />
     </div>
   );
 };

@@ -1,23 +1,33 @@
-import type { FC } from 'react';
+import { useEffect, useRef, type FC } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { HeroInfo } from '../../../modules/hero/components/hero-info';
 import type { HeroModel } from '../../../core/interfaces';
-import characters from '../../../core/data/characters.json';
-import { ROUTES } from '../../../core/enums';
+import { useFetch } from '../../../core/hooks';
+import { API_ROUTES, ROUTES } from '../../../core/enums';
 import styled from './hero.module.css';
 
 export const HeroPage: FC = () => {
-  const { id } = useParams();
-  const hero = characters.find((hero) => hero.id === Number(id));
+  const hasRequested = useRef(false);
 
-  if (!id || !hero) {
-    return <Navigate to={ROUTES.NOT_FOUND} />;
+  const { id } = useParams();
+
+  const { data: hero, isLoading, error, get } = useFetch<HeroModel | null>();
+
+  useEffect(() => {
+    if (id) {
+      get(`${API_ROUTES.HEROES}/${id}`);
+      hasRequested.current = true;
+    }
+  }, [get, id]);
+
+  if (!id || (hasRequested.current && !isLoading && !hero)) {
+    return <Navigate to={ROUTES.NOT_FOUND} replace />;
   }
 
   return (
     <div className={styled['hero-page']}>
       <h1>{hero?.name}</h1>
-      <HeroInfo hero={hero as HeroModel} />
+      <HeroInfo hero={hero!} isLoading={isLoading} error={error} />
     </div>
   );
 };

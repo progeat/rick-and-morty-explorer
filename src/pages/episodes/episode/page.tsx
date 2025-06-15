@@ -1,24 +1,43 @@
-import type { FC } from 'react';
+import { useEffect, useRef, type FC } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { EpisodeInfo } from '../../../modules/episode/components/episode-info';
-import episodesData from '../../../core/data/episode.json';
+import type { EpisodeDto } from '../../../core/interfaces';
+import { useFetch } from '../../../core/hooks';
 import { DtoToModelMapper } from '../../../core/mapers/dto-to-model.mappers';
-import { ROUTES } from '../../../core/enums';
+import { API_ROUTES, ROUTES } from '../../../core/enums';
 import styled from './episode.module.css';
 
 export const EpisodePage: FC = () => {
-  const { id } = useParams();
-  const episodes = DtoToModelMapper.normolizeEpisodes(episodesData);
-  const episode = episodes.find((episode) => episode.id === Number(id));
+  const hasRequested = useRef(false);
 
-  if (!id || !episode) {
-    return <Navigate to={ROUTES.NOT_FOUND} />;
+  const { id } = useParams();
+
+  const {
+    data: episodeData,
+    isLoading,
+    error,
+    get,
+  } = useFetch<EpisodeDto | null>();
+
+  const episode = episodeData
+    ? DtoToModelMapper.normolizeEpisodes([episodeData])[0]
+    : null;
+
+  useEffect(() => {
+    if (id) {
+      get(`${API_ROUTES.EPISODES}/${id}`);
+      hasRequested.current = true;
+    }
+  }, [get, id]);
+
+  if (!id || (hasRequested.current && !isLoading && !episode)) {
+    return <Navigate to={ROUTES.NOT_FOUND} replace />;
   }
 
   return (
     <div className={styled['episode-page']}>
       <h1>Episode</h1>
-      <EpisodeInfo episode={episode} />
+      <EpisodeInfo episode={episode!} isLoading={isLoading} error={error} />
     </div>
   );
 };
