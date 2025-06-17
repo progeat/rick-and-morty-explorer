@@ -1,7 +1,7 @@
 import { API_ROUTES } from '../enums';
 import type { User } from '../interfaces';
 
-const baseUrl = import.meta.env.VITE_API_URL;
+const baseUrl = import.meta.env.VITE_API_USERS_URL;
 
 interface Login {
   email: string;

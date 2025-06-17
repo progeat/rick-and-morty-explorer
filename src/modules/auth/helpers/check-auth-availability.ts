@@ -1,6 +1,6 @@
 import { API_ROUTES } from '../../../core/enums';
 
-const baseUrl = import.meta.env.VITE_API_URL;
+const baseUrl = import.meta.env.VITE_API_USERS_URL;
 
 export const checkLoginAvailability = async (login: string): Promise<void> => {
   const response = await fetch(
