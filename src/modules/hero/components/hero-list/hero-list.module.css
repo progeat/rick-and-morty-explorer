@@ -22,3 +22,9 @@
 .error {
   color: tomato;
 }
+
+.loader-wrapper {
+  position: relative;
+  height: 100px;
+  padding: 20px;
+}
