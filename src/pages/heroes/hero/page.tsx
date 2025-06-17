@@ -3,7 +3,7 @@ import { Navigate, useParams } from 'react-router-dom';
 import { HeroInfo } from '../../../modules/hero/components/hero-info';
 import type { HeroModel } from '../../../core/interfaces';
 import { useFetch } from '../../../core/hooks';
-import { API_ROUTES, ROUTES } from '../../../core/enums';
+import { API_ROUTES, ROUTES, TYPE_SOURCE } from '../../../core/enums';
 import styled from './hero.module.css';
 
 export const HeroPage: FC = () => {
@@ -11,7 +11,12 @@ export const HeroPage: FC = () => {
 
   const { id } = useParams();
 
-  const { data: hero, isLoading, error, get } = useFetch<HeroModel | null>();
+  const {
+    data: hero,
+    isLoading,
+    error,
+    get,
+  } = useFetch<HeroModel | null>(TYPE_SOURCE.DATA);
 
   useEffect(() => {
     if (id) {

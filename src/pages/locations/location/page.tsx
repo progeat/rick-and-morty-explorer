@@ -3,7 +3,7 @@ import { Navigate, useParams } from 'react-router-dom';
 import { LocationInfo } from '../../../modules/location/components/location-info';
 import type { LocationModel } from '../../../core/interfaces';
 import { useFetch } from '../../../core/hooks';
-import { API_ROUTES, ROUTES } from '../../../core/enums';
+import { API_ROUTES, ROUTES, TYPE_SOURCE } from '../../../core/enums';
 import styled from './location.module.css';
 
 export const LocationPage: FC = () => {
@@ -16,7 +16,7 @@ export const LocationPage: FC = () => {
     isLoading,
     error,
     get,
-  } = useFetch<LocationModel | null>();
+  } = useFetch<LocationModel | null>(TYPE_SOURCE.DATA);
 
   useEffect(() => {
     if (id) {
