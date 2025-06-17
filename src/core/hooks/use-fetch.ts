@@ -7,40 +7,17 @@ interface Options<T> {
   body?: T;
 }
 
-const baseUrl = import.meta.env.VITE_API_URL;
+const baseUrlUsers = import.meta.env.VITE_API_USERS_URL;
+const baseUrlData = import.meta.env.VITE_API_URL;
 
-export const useFetch = <T>() => {
+export const useFetch = <T>(type: 'data' | 'users') => {
+  const baseUrl = type === 'data' ? baseUrlData : baseUrlUsers;
+
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const get = useCallback(async (url: string) => {
-    url = `${baseUrl}/${url}`;
-
-    try {
-      setError(null);
-      setIsLoading(true);
-
-      const response = await fetch(url);
-
-      if (!response.ok) {
-        throw new Error(`Ошибка: ${response.status}`);
-      }
-
-      const responseData = await response.json();
-
-      setData(responseData as T);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        console.error(error.message);
-        setError(error.message || 'Ошибка запроса сервера');
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  const requestOtherMethods = useCallback(
+  const fetchData = useCallback(
     async (url: string, options: Options<T>) => {
       url = `${baseUrl}/${url}`;
 
@@ -48,19 +25,16 @@ export const useFetch = <T>() => {
         setError(null);
         setIsLoading(true);
 
-        const headers: HeadersInit = {};
-        if (options.body && typeof options.body !== 'string') {
-          headers['Content-Type'] = 'application/json';
-        }
+        const headers: HeadersInit = { 'Content-Type': 'application/json' };
 
         const response = await fetch(url, {
-          method: options.method ?? 'POST',
+          method: options.method ?? 'GET',
           headers,
           body: options.body ? JSON.stringify(options.body) : undefined,
         });
 
         if (!response.ok) {
-          throw new Error(`Ошибка: ${response.status}`);
+          throw new Error(`Error: ${response.status}`);
         }
 
         const responseData = await response.json();
@@ -69,13 +43,34 @@ export const useFetch = <T>() => {
       } catch (error: unknown) {
         if (error instanceof Error) {
           console.error(error.message);
-          setError(error.message || 'Ошибка запроса сервера');
+          setError(error.message || 'Server request error');
         }
       } finally {
         setIsLoading(false);
       }
     },
-    []
+    [baseUrl]
+  );
+
+  const get = useCallback(
+    (url: string) => fetchData(url, { method: 'GET' }),
+    [fetchData]
+  );
+  const post = useCallback(
+    (url: string, body: T) => fetchData(url, { method: 'POST', body }),
+    [fetchData]
+  );
+  const put = useCallback(
+    (url: string, body: T) => fetchData(url, { method: 'PUT', body }),
+    [fetchData]
+  );
+  const patch = useCallback(
+    (url: string, body: T) => fetchData(url, { method: 'PATCH', body }),
+    [fetchData]
+  );
+  const remove = useCallback(
+    (url: string) => fetchData(url, { method: 'DELETE' }),
+    [fetchData]
   );
 
   return {
@@ -83,12 +78,9 @@ export const useFetch = <T>() => {
     isLoading,
     error,
     get,
-    post: (url: string, body: T) =>
-      requestOtherMethods(url, { method: 'POST', body }),
-    put: (url: string, body: T) =>
-      requestOtherMethods(url, { method: 'PUT', body }),
-    patch: (url: string, body: T) =>
-      requestOtherMethods(url, { method: 'PATCH', body }),
-    delete: (url: string) => requestOtherMethods(url, { method: 'DELETE' }),
+    post,
+    put,
+    patch,
+    delete: remove,
   };
 };
