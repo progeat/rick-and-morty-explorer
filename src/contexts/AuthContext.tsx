@@ -1,12 +1,12 @@
 import {
   createContext,
   useEffect,
-  useLayoutEffect,
   useState,
   type FC,
   type ReactNode,
 } from 'react';
 import type { User } from '../core/interfaces';
+import { Loader } from '../ui/loader';
 
 interface AuthContextState {
   user: User | null;
@@ -26,12 +26,14 @@ export const AuthContext = createContext<AuthContextState>(initialState);
 
 export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const storageUser = sessionStorage.getItem('user');
     if (storageUser) {
       setUser(JSON.parse(storageUser));
     }
+    setIsLoading(false);
   }, []);
 
   useEffect(() => {
@@ -41,6 +43,10 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       sessionStorage.removeItem('user');
     }
   }, [user]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <AuthContext.Provider value={{ user, setUser }}>
