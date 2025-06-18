@@ -15,8 +15,13 @@ export enum SORT_DIRECTION {
   DESC = 'DESC',
 }
 
+export enum TYPE_SOURCE {
+  DATA = 'data',
+  USERS = 'users',
+}
+
 export enum API_ROUTES {
-  HEROES = 'characters',
+  HEROES = 'character',
   EPISODES = 'episode',
   LOCATIONS = 'location',
   USERS = 'users',

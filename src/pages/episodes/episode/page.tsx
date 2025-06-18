@@ -4,7 +4,7 @@ import { EpisodeInfo } from '../../../modules/episode/components/episode-info';
 import type { EpisodeDto } from '../../../core/interfaces';
 import { useFetch } from '../../../core/hooks';
 import { DtoToModelMapper } from '../../../core/mapers/dto-to-model.mappers';
-import { API_ROUTES, ROUTES } from '../../../core/enums';
+import { API_ROUTES, ROUTES, TYPE_SOURCE } from '../../../core/enums';
 import styled from './episode.module.css';
 
 export const EpisodePage: FC = () => {
@@ -17,7 +17,7 @@ export const EpisodePage: FC = () => {
     isLoading,
     error,
     get,
-  } = useFetch<EpisodeDto | null>();
+  } = useFetch<EpisodeDto | null>(TYPE_SOURCE.DATA);
 
   const episode = episodeData
     ? DtoToModelMapper.normolizeEpisodes([episodeData])[0]

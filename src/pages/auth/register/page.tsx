@@ -5,12 +5,12 @@ import { AuthContext } from '../../../contexts';
 import { AuthLayout } from '../layout';
 import { Signup } from '../../../modules/auth/components/sign-up';
 import { useFetch } from '../../../core/hooks';
-import { API_ROUTES, ROUTES } from '../../../core/enums';
+import { API_ROUTES, ROUTES, TYPE_SOURCE } from '../../../core/enums';
 
 export const RegisterPage: FC = () => {
   const { user, setUser } = useContext(AuthContext);
 
-  const { post } = useFetch();
+  const { post } = useFetch(TYPE_SOURCE.USERS);
 
   const onSubmit = (user: User) => {
     post(API_ROUTES.USERS, user);

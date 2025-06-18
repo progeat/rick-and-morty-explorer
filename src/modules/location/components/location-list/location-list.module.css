@@ -16,3 +16,13 @@
 .item:not(:last-child) {
   margin-bottom: 10px;
 }
+
+.error {
+  color: tomato;
+}
+
+.loader-wrapper {
+  position: relative;
+  height: 100px;
+  padding: 20px;
+}

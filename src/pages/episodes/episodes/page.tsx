@@ -1,16 +1,22 @@
-import { useEffect, type FC } from 'react';
+import { type FC } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { EpisodeList } from '../../../modules/episode/components/episode-list';
 import { ControlPanel } from '../../../ui/control-panel';
 import type { EpisodeDto, EpisodeModel } from '../../../core/interfaces';
-import { useFetch } from '../../../core/hooks';
+import { useRequestWithInfinityScroll } from '../../../core/hooks';
 import { API_ROUTES, SORT_DIRECTION } from '../../../core/enums';
 import { DtoToModelMapper } from '../../../core/mapers/dto-to-model.mappers';
 import { Sorter } from '../../../core/helpers/sorter.helpers';
 import styled from './episodes.module.css';
 
 export const EpisodesPage: FC = () => {
-  const { data: episodesData, isLoading, error, get } = useFetch();
+  const {
+    data: episodesData,
+    isLoading,
+    error,
+    hasMore,
+    lastNodeRef,
+  } = useRequestWithInfinityScroll(API_ROUTES.EPISODES);
 
   const episodes =
     episodesData !== null
@@ -24,10 +30,6 @@ export const EpisodesPage: FC = () => {
     episodes,
     currentSortParam as SORT_DIRECTION
   );
-
-  useEffect(() => {
-    get(API_ROUTES.EPISODES);
-  }, [get]);
 
   const handleSortChange = (newSortValue: SORT_DIRECTION) => {
     setSearchParams({ sort: newSortValue });
@@ -44,6 +46,8 @@ export const EpisodesPage: FC = () => {
         episodes={sortedEpisodes as EpisodeModel[]}
         isLoading={isLoading}
         error={error}
+        hasMore={hasMore}
+        lastNodeRef={lastNodeRef}
       />
     </div>
   );
