@@ -1,8 +1,8 @@
 import type { FC, Ref } from 'react';
 import { Link } from 'react-router-dom';
 import type { HeroModel } from '@/shared/types';
-import { Loader } from '@/shared/ui/loader';
 import { AppRoutes } from '@/shared/config/routes';
+import { Box, List, Loader } from '@mantine/core';
 import styled from './hero-list.module.css';
 
 type HeroListProps = {
@@ -22,24 +22,32 @@ export const HeroList: FC<HeroListProps> = (props) => {
 
   return (
     <>
-      <ul className={styled.list}>
+      <List
+        styles={{
+          root: { display: 'flex', flexWrap: 'wrap', gap: '20px' },
+          item: { width: '30%' },
+        }}
+      >
         {heroes.map((hero, index) => (
-          <li
+          <List.Item
             ref={heroes.length === index + 1 ? lastNodeRef : null}
-            className={styled.item}
             key={hero.id}
           >
             <Link className={styled.link} to={`${AppRoutes.HEROES}/${hero.id}`}>
               <img className={styled.img} src={hero.image} />
               {hero.name}
             </Link>
-          </li>
+          </List.Item>
         ))}
-      </ul>
+      </List>
       {isLoading && hasMore && (
-        <div className={styled['loader-wrapper']}>
-          <Loader />
-        </div>
+        <Box h={100} p={20}>
+          <Loader
+            styles={{ root: { margin: '0 auto' } }}
+            color="teal"
+            type="dots"
+          />
+        </Box>
       )}
     </>
   );
