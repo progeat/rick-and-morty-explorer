@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { SortDirection } from '@/shared/const';
-import styled from './control-panel.module.css';
+import { Box, NativeSelect } from '@mantine/core';
 
 type ControlPanelProps = {
   currentSortParam: SortDirection;
@@ -12,17 +12,16 @@ export const ControlPanel: FC<ControlPanelProps> = ({
   handleSortChange,
 }) => {
   return (
-    <div className={styled['control-panel']}>
-      <label>Sort: </label>
-      <select
+    <Box p="md" mx="auto">
+      <NativeSelect
+        styles={{ root: { margin: '0 auto', width: '30%' } }}
         value={currentSortParam}
+        label="Sort: "
+        data={Object.values(SortDirection)}
         onChange={(event) =>
           handleSortChange(event.target.value as SortDirection)
         }
-      >
-        <option value={SortDirection.ASC}>ascending</option>
-        <option value={SortDirection.DESC}>descending</option>
-      </select>
-    </div>
+      />
+    </Box>
   );
 };
