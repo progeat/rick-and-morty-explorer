@@ -1,6 +1,6 @@
 # Rick and Morty Universe Explorer
 
-Это интерактивное React-приложение с информацией вселенной Рика и Морти с использованием React Router, ContextAPI и JSON Server. Приложение позволяет просматривать персонажей, локации и эпизоды популярного мультсериала.
+Это интерактивное React-приложение с информацией вселенной Рика и Морти с использованием React Router, ContextAPI, JSON Server и дизайн-системой Mantine на архитектуре Feature-Sliced Design. Приложение позволяет просматривать персонажей, локации и эпизоды популярного мультсериала.
 
 ## Особенности
 
@@ -66,6 +66,8 @@ npm run dev
 
 - React 18
 
+- Feature-Sliced Design
+
 - React Router
 
 - ContextAPI
@@ -75,6 +77,8 @@ npm run dev
 - Intersaction Observer API (Infinity Scroll)
 
 - JSON Server
+
+- Mantine
 
 - CSS Modules для стилизации
 

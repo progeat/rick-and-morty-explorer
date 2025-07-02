@@ -1,0 +1,30 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.item {
+  width: 30%;
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.img {
+  width: 200px;
+  height: 200px;
+}
+
+.error {
+  color: tomato;
+}
+
+.loader-wrapper {
+  position: relative;
+  height: 100px;
+  padding: 20px;
+}
