@@ -3,8 +3,9 @@ import { Navigate } from 'react-router-dom';
 import { AuthContext } from '@/app/context';
 import { Signin } from '@/features/auth/ui/sign-in';
 import { AuthLayout } from '@/widgets/layouts';
-import { Auth } from '@/features/auth/lib';
+// import { Auth } from '@/features/auth/lib';
 import { AppRoutes } from '@/shared/config/routes';
+import type { User } from '@/shared/types';
 
 type AuthFormValues = {
   email: string;
@@ -18,8 +19,13 @@ export const LoginPage: FC = () => {
 
   const onSubmit = async (authValues: AuthFormValues): Promise<void> => {
     try {
-      const user = await Auth.login(authValues);
-      setUser(user);
+      const user = authValues && {
+        name: 'administrator',
+        login: 'admin',
+        email: 'admin@rick.com',
+        sex: 'male',
+      }; // await Auth.login(authValues); // json-server
+      setUser(user as User);
     } catch (error: unknown) {
       if (error instanceof Error) {
         setError(error.message);
